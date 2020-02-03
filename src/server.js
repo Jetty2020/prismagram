@@ -1,14 +1,20 @@
-require("dotenv").config();
- import { GraphQLServer } from "graphql-yoga";
- import logger from "morgan";
- import schema from "./schema";
+import dotenv from "dotenv";
+import path from "path";
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
- const PORT = process.env.PORT || 4000;
+import { GraphQLServer } from "graphql-yoga";
+import logger from "morgan";
+import schema from "./schema";
+import { sendSecretMail } from "./utils";
 
- const server = new GraphQLServer({ schema });
+ sendSecretMail("kmclo@naver.com", "123");
 
- server.express.use(logger("dev"));
+const PORT = process.env.PORT || 4000;
 
- server.start({ port: PORT }, () =>
- console.log(`✅ Server running on http://localhost:${PORT}`)
- );
+const server = new GraphQLServer({ schema });
+
+server.express.use(logger("dev"));
+
+server.start({ port: PORT }, () =>
+console.log(`✅ Server running on http://localhost:${PORT}`)
+);
