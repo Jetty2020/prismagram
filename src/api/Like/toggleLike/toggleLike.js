@@ -7,24 +7,25 @@ import { isAuthenticated } from "../../../middlewares";
        isAuthenticated(request);
        const { postId } = args;
        const { user } = request;
-       try {
-         const existingLike = await prisma.$exists.like({
-           AND: [
-             {
-               user: {
-                 id: user.id
-               }
-             },
-             {
-               post: {
-                 id: postId
-               }
+       const filterOptions = {
+        AND: [
+          {
+            user: {
+              id: user.id
              }
-           ]
-         });
+            },
+            {
+              post: {
+                id: postId
+              }
+            }
+          ]
+        };
+        try {
+          const existingLike = await prisma.$exists.like(filterOptions);
          if (existingLike) {
-           // TO DO
-         } else {
+          await prisma.deleteManyLikes(filterOptions);
+        } else {
            await prisma.createLike({
              user: {
                connect: {
