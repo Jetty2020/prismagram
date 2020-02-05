@@ -12,10 +12,5 @@ import { prisma } from "../../../../generated/prisma-client";
          posts
        };
      }
-    },
-    User: {
-      fullName: parent => {
-        return `${parent.firstName} ${parent.lastName}`;
-      }
    }
  };
