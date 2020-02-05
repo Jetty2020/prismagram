@@ -1,5 +1,4 @@
 import { prisma } from "../../../../generated/prisma-client";
- import { USER_FRAGMENT } from "../../../fragments";
 
  export default {
    Query: {
@@ -13,5 +12,10 @@ import { prisma } from "../../../../generated/prisma-client";
          posts
        };
      }
+    },
+    User: {
+      fullName: parent => {
+        return `${parent.firstName} ${parent.lastName}`;
+      }
    }
  };
