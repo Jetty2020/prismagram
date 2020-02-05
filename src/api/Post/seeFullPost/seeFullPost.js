@@ -16,10 +16,14 @@ import { prisma } from "../../../../generated/prisma-client";
          })
          .aggregate()
          .count();
+         const files = await prisma.post({ id }).files();
+         const user = await prisma.post({ id }).user();
        return {
          post,
          comments,
-         likeCount
+         likeCount,
+         files,
+         user
        };
      }
    }
