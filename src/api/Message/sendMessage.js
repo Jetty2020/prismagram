@@ -1,5 +1,4 @@
 import { prisma } from "../../../generated/prisma-client";
-import { ROOM_FRAGMENT } from "../../fragments";
 
  export default {
    Mutation: {
@@ -10,23 +9,20 @@ import { ROOM_FRAGMENT } from "../../fragments";
        let room;
        if (roomId === undefined) {
         if (user.id !== toId) {
-          room = await prisma
-            .createRoom({
-              participants: {
-                connect: [{ id: toId }, { id: user.id }]
-              }
-            })
-            .$fragment(ROOM_FRAGMENT);
+          room = await prisma.createRoom({
+            participants: {
+              connect: [{ id: toId }, { id: user.id }]
+            }
+          });
          }
        } else {
-        room = await prisma.room({ id: roomId }).$fragment(ROOM_FRAGMENT);
+        room = await prisma.room({ id: roomId });
       }
       if (!room) {
         throw Error("Room not found");
        }
-       const getTo = room.participants.filter(
-        participant => participant.id !== user.id
-      )[0];
+       const participants = await prisma.room({ id: roomId }).participants();
+       const getTo = participants.filter(participant => participant.id !== user.id)[0];
       return prisma.createMessage({
         text: message,
         from: {

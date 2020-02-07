@@ -10,8 +10,7 @@ import { generateSecret, sendSecretMail } from "../../../utils";
         await sendSecretMail(email, loginSecret);
          await prisma.updateUser({ data: { loginSecret }, where: { email } });
          return true;
-        } catch (e) {
-          console.log(e);
+       } catch {
          return false;
        }
      }

@@ -10,7 +10,9 @@ type User {
    isSelf: Boolean!
    bio: String
    following: [User!]!
+   followingCount: Int!
    followers: [User!]!
+   followersCount: Int!
    posts: [Post!]!
    likes: [Like!]!
    comments: [Comment!]!
@@ -18,6 +20,7 @@ type User {
    loginSecret: String!
    createdAt: String
    updatedAt: String
+   userProfile: User!
  }
 
  type Post {
@@ -73,13 +76,6 @@ type User {
    from: User!
    to: User!
    room: Room!
-   createdAt: String
-   updatedAt: String
- }
-
- type UserProfile {
-   user: User!
-   posts: [Post!]!
    createdAt: String
    updatedAt: String
  }
