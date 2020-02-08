@@ -32,6 +32,7 @@ type User {
    likes: [Like!]!
    comments: [Comment!]!
    isLiked: Boolean!
+   commentCount: Int!
    likeCount: Int!
    createdAt: String
    updatedAt: String
